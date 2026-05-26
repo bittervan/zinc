@@ -1,0 +1,38 @@
+# Top-level build output
+/build/
+
+# CMake build products, in case CMake is run from another directory
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+
+# Compiler and linker outputs
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.elf
+*.bin
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Editor and language-server state
+.cache/
+.clangd/
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

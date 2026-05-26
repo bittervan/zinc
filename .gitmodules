@@ -7,3 +7,6 @@
 [submodule "zinc-simulator"]
 	path = zinc-simulator
 	url = git@github.com:bittervan/zinc-simulator.git
+[submodule "third_party/spike"]
+	path = third_party/spike
+	url = git@github.com:riscv-software-src/riscv-isa-sim.git
