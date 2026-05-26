@@ -1,0 +1,7 @@
+.PHONY: test clean
+
+test:
+	$(MAKE) -C tests
+
+clean:
+	$(MAKE) -C tests clean
