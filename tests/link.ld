@@ -1,9 +1,34 @@
 ENTRY(_start)
+
+MEMORY
+{
+    ram (rwx) : ORIGIN = 0x80000000, LENGTH = 64K
+}
+
 SECTIONS
 {
-    /* 假设你的处理器从 0x00000000 启动 */
-    . = 0x00000000;
-    .text : { *(.text) }
-    .data : { *(.data) }
-    .bss : { *(.bss) }
+    . = ORIGIN(ram);
+
+    .text : {
+        *(.text.start)
+        *(.text*)
+    } > ram
+
+    .rodata : {
+        *(.rodata*)
+    } > ram
+
+    .data : {
+        *(.sdata*)
+        *(.data*)
+    } > ram
+
+    .bss : {
+        *(.sbss*)
+        *(.bss*)
+        *(COMMON)
+    } > ram
+
+    . = ALIGN(16);
+    _stack_top = ORIGIN(ram) + LENGTH(ram);
 }

@@ -1,4 +1,10 @@
-.PHONY: test sim-build sim clean all
+SPIKE_BUILD_DIR := build/third_party/spike
+SPIKE := $(SPIKE_BUILD_DIR)/spike
+SPIKE_ISA ?= RV64I
+SPIKE_PC ?= 0x80000000
+SPIKE_INSTRUCTIONS ?= 16
+
+.PHONY: test sim-build sim spike-build spike-run spike-trace difftest clean all
 
 all: test sim-build
 
@@ -12,6 +18,24 @@ sim-build:
 
 sim: test sim-build
 	build/zinc-simulator/zinc-simulator build/tests/add.bin
+
+$(SPIKE_BUILD_DIR)/Makefile:
+	mkdir -p $(SPIKE_BUILD_DIR)
+	cd $(SPIKE_BUILD_DIR) && ../../../third_party/spike/configure --prefix=$$(pwd)/install --with-target=riscv64-unknown-elf
+
+$(SPIKE): $(SPIKE_BUILD_DIR)/Makefile
+	$(MAKE) -C $(SPIKE_BUILD_DIR) -j$$(nproc)
+
+spike-build: $(SPIKE)
+
+spike-run: test spike-build
+	$(SPIKE) --isa=$(SPIKE_ISA) --pc=$(SPIKE_PC) --instructions=$(SPIKE_INSTRUCTIONS) build/tests/add.elf
+
+spike-trace: test spike-build
+	$(SPIKE) --isa=$(SPIKE_ISA) --pc=$(SPIKE_PC) --instructions=$(SPIKE_INSTRUCTIONS) -l --log-commits build/tests/add.elf
+
+difftest: test sim-build spike-build
+	zinc-simulator/tools/difftest.py --steps $(SPIKE_INSTRUCTIONS)
 
 clean:
 	$(MAKE) -C tests clean
