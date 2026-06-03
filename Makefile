@@ -2,7 +2,8 @@ SPIKE_BUILD_DIR := build/third_party/spike
 SPIKE := $(SPIKE_BUILD_DIR)/spike
 SPIKE_ISA ?= RV64I
 SPIKE_PC ?= 0x80000000
-SPIKE_INSTRUCTIONS ?= 16
+SPIKE_INSTRUCTIONS ?= 128
+CASE ?= add
 
 .PHONY: test sim-build sim spike-build spike-run spike-trace difftest clean all
 
@@ -17,7 +18,7 @@ sim-build:
 	ln -sf ../build/zinc-simulator/compile_commands.json zinc-simulator/compile_commands.json
 
 sim: test sim-build
-	build/zinc-simulator/zinc-simulator build/tests/add.bin
+	build/zinc-simulator/zinc-simulator build/tests/$(CASE).bin
 
 $(SPIKE_BUILD_DIR)/Makefile:
 	mkdir -p $(SPIKE_BUILD_DIR)
@@ -29,13 +30,13 @@ $(SPIKE): $(SPIKE_BUILD_DIR)/Makefile
 spike-build: $(SPIKE)
 
 spike-run: test spike-build
-	$(SPIKE) --isa=$(SPIKE_ISA) --pc=$(SPIKE_PC) --instructions=$(SPIKE_INSTRUCTIONS) build/tests/add.elf
+	$(SPIKE) --isa=$(SPIKE_ISA) --pc=$(SPIKE_PC) --instructions=$(SPIKE_INSTRUCTIONS) build/tests/$(CASE).elf
 
 spike-trace: test spike-build
-	$(SPIKE) --isa=$(SPIKE_ISA) --pc=$(SPIKE_PC) --instructions=$(SPIKE_INSTRUCTIONS) -l --log-commits build/tests/add.elf
+	$(SPIKE) --isa=$(SPIKE_ISA) --pc=$(SPIKE_PC) --instructions=$(SPIKE_INSTRUCTIONS) -l --log-commits build/tests/$(CASE).elf
 
 difftest: test sim-build spike-build
-	zinc-simulator/tools/difftest.py --steps $(SPIKE_INSTRUCTIONS)
+	zinc-simulator/tools/difftest.py --steps $(SPIKE_INSTRUCTIONS) $(if $(filter command line,$(origin CASE)),--case $(CASE),)
 
 clean:
 	$(MAKE) -C tests clean

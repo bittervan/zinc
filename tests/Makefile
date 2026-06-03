@@ -8,13 +8,13 @@ TARGET := riscv64-unknown-elf
 ARCH := rv64i
 ABI := lp64
 
-ASFLAGS := --target=$(TARGET) -march=$(ARCH) -mabi=$(ABI)
+ASFLAGS := --target=$(TARGET) -march=$(ARCH) -mabi=$(ABI) -mcmodel=medany
 CFLAGS := --target=$(TARGET) -march=$(ARCH) -mabi=$(ABI) -ffreestanding \
-	-fno-builtin -nostdlib -O2 -Wall -Wextra
-LDFLAGS := --target=$(TARGET) -march=$(ARCH) -mabi=$(ABI) -fuse-ld=lld -nostdlib \
+	-fno-builtin -nostdlib -O2 -Wall -Wextra -mcmodel=medany
+LDFLAGS := --target=$(TARGET) -march=$(ARCH) -mabi=$(ABI) -mcmodel=medany -fuse-ld=lld -nostdlib \
 	-Wl,-T,link.ld -Wl,--no-relax
 
-TESTS := add
+TESTS := add bitops branch loop memory
 CRT0_OBJ := $(BUILD_DIR)/crt0.o
 OBJS := $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(TESTS)))
 ELFS := $(addprefix $(BUILD_DIR)/,$(addsuffix .elf,$(TESTS)))
