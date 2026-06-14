@@ -42,3 +42,6 @@ $(RISCV_TESTS_ISA_BUILD):
 .PHONY: clean-riscv-tests
 clean-riscv-tests:
 	rm -rf $(RISCV_TESTS_BUILD)
+
+.PHONY: clean
+clean: clean-riscv-tests
