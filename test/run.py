@@ -1,4 +1,5 @@
 from pathlib import Path
+from spike import SpikeBackend
 import subprocess
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -10,6 +11,7 @@ tests = sorted(
         if p.suffix != ".dump"
 )
 
+golden_backend = SpikeBackend(SPIKE_BIN)
+
 for test in tests:
-    r = subprocess.run([str(SPIKE_BIN), str(test)], capture_output=True, text=True)
-    print(r.stderr)
+    golden_backend.run(test)
