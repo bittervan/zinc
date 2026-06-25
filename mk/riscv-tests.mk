@@ -1,7 +1,6 @@
 RISCV_TESTS_SRC := $(ROOT_DIR)/third_party/riscv-tests
 RISCV_TESTS_BUILD := $(ROOT_DIR)/build/riscv-tests
 RISCV_TESTS_ISA_BUILD := $(RISCV_TESTS_BUILD)/isa
-RISCV_TESTS_INSTALL := $(RISCV_TESTS_BUILD)/install
 
 RISCV_TARGET ?= riscv64-elf
 RISCV_PREFIX := $(RISCV_TARGET)-
@@ -22,8 +21,7 @@ $(RISCV_TESTS_BUILD)/Makefile: $(RISCV_TESTS_SRC)/configure
 	mkdir -p $(RISCV_TESTS_BUILD)
 	cd $(RISCV_TESTS_BUILD) && \
 			$(RISCV_TESTS_SRC)/configure \
-					--target=$(RISCV_TARGET) \
-					--prefix=$(RISCV_TESTS_INSTALL)
+					--target=$(RISCV_TARGET)
 
 $(RISCV_TESTS_SRC)/configure:
 	git submodule update --init third_party/riscv-tests
