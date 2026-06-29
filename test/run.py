@@ -14,4 +14,5 @@ tests = sorted(
 golden_backend = SpikeBackend(SPIKE_BIN)
 
 for test in tests:
-    golden_backend.run(test)
+    golden_commits = golden_backend.run(test)
+    print(golden_commits)

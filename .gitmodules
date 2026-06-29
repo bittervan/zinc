@@ -12,4 +12,4 @@
 	url = git@github.com:riscv-software-src/riscv-isa-sim.git
 [submodule "third_party/riscv-tests"]
 	path = third_party/riscv-tests
-	url = git@github.com:riscv-software-src/riscv-tests.git
+	url = git@github.com:bittervan/riscv-tests.git
