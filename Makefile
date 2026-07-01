@@ -3,9 +3,10 @@ ROOT_DIR := $(CURDIR)
 
 include mk/spike.mk
 include mk/riscv-tests.mk
+include mk/zinc.mk
 
 .PHONY: all clean
 
-all: riscv-tests spike
+all: riscv-tests spike zinc
 
-clean: clean-riscv-tests clean-spike
+clean: clean-riscv-tests clean-spike clean-zinc

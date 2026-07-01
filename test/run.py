@@ -15,4 +15,4 @@ golden_backend = SpikeBackend(SPIKE_BIN)
 
 for test in tests:
     golden_commits = golden_backend.run(test)
-    print(golden_commits)
+    # print(golden_commits)

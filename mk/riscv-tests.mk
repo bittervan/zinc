@@ -23,15 +23,6 @@ $(RISCV_TESTS_BUILD)/Makefile: $(RISCV_TESTS_SRC)/configure
 			$(RISCV_TESTS_SRC)/configure \
 					--target=$(RISCV_TARGET)
 
-$(RISCV_TESTS_SRC)/configure:
-	git submodule update --init third_party/riscv-tests
-
-$(RISCV_TESTS_SRC)/env/p/riscv_test.h:
-	git -C $(RISCV_TESTS_SRC) config submodule.env.url git@github.com:riscv/riscv-test-env.git
-	git -C $(RISCV_TESTS_SRC) submodule update --init env
-
-$(RISCV_TESTS_BUILD)/Makefile: $(RISCV_TESTS_SRC)/env/p/riscv_test.h
-
 $(RISCV_TESTS_ISA_BUILD):
 	mkdir -p $@
 
