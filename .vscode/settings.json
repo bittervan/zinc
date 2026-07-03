@@ -1,5 +1,6 @@
 {
     "clangd.arguments": [
-        "--compile-commands-dir=build/zinc"
+        "--compile-commands-dir=build/zinc",
+        "--header-insertion=never"
     ]
 }
