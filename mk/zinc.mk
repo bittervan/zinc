@@ -7,7 +7,7 @@ ZINC_CMAKE_TIMESTAMP := $(ZINC_BUILD)/CMakeCache.txt
 zinc: $(ZINC_CMAKE_TIMESTAMP)
 	$(CMAKE) --build $(ZINC_BUILD)
 
-$(ZINC_CMAKE_TIMESTAMP): CMakeLists.txt zinc-simulator/CMakeLists.txt
+$(ZINC_CMAKE_TIMESTAMP): CMakeLists.txt sim/CMakeLists.txt
 	$(CMAKE) -S $(ROOT_DIR) \
 			-B $(ZINC_BUILD) \
 			-DCMAKE_EXPORT_COMPILE_COMMANDS=ON

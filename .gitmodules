@@ -1,11 +1,11 @@
 [submodule "zinc-rtl"]
-	path = zinc-rtl
+	path = rtl
 	url = git@github.com:bittervan/zinc-rtl.git
 [submodule "zinc-compiler"]
-	path = zinc-compiler
+	path = compiler
 	url = git@github.com:bittervan/zinc-compiler.git
 [submodule "zinc-simulator"]
-	path = zinc-simulator
+	path = sim
 	url = git@github.com:bittervan/zinc-simulator.git
 [submodule "third_party/spike"]
 	path = third_party/spike
