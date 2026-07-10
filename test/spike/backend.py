@@ -2,10 +2,16 @@ from pathlib import Path
 from common import Backend, Commit, RegWrite, MemAccess
 import subprocess
 import re
+from elftools.elf.elffile import ELFFile
 
 _LINE_RE = re.compile( r"^core\s+(\d+):\s+(\d+)\s+(0x[0-9a-f]+)\s+\((0x[0-9a-f]+)\)\s*(.*)$" )
 _REG_RE = re.compile(r"^([xfv])(\d+)$")
 _CSR_RE = re.compile(r"^c(\d+)(?:_[A-Za-z0-9_]+)?$")
+
+def _read_elf_entry(elf_path: Path) -> int:
+    with elf_path.open("rb") as elf_file:
+        elf = ELFFile(elf_file)
+        return elf.header["e_entry"]
 
 def _parse_rest(rest: str):
     tokens = rest.split()
@@ -54,7 +60,7 @@ class SpikeBackend(Backend):
         
     def run(self, elf_path: Path) -> list[Commit]:
         r = subprocess.run(
-            [str(self._bin_path), "--log-commits", "--log=/dev/stdout", str(elf_path)],
+            [str(self._bin_path), f"--pc={_read_elf_entry(elf_path)}", "--log-commits", "--log=/dev/stdout", str(elf_path)],
             capture_output=True,
             text=True
         )
