@@ -18,7 +18,7 @@ class ZincBackend(Backend):
 
         if r.returncode != 0:
             raise RuntimeError(
-                f"failed to run {elf_path}: {r.stderr.rstrip()}"
+                f"failed to run {elf_path}.dump:\n {r.stderr.rstrip()}"
             )
 
         ret: list[Commit] = []

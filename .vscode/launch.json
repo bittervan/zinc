@@ -8,7 +8,7 @@
             "name": "Debug zinc-sim rv64ui-p-add",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/build/zinc/zinc-simulator/zinc-sim",
+            "program": "${workspaceRoot}/build/zinc/sim/zinc-sim",
             "args": [
                 "${input:riscvTest}"
             ],

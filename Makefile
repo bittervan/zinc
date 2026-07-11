@@ -5,8 +5,11 @@ include mk/spike.mk
 include mk/riscv-tests.mk
 include mk/zinc.mk
 
-.PHONY: all clean
+.PHONY: all clean test
 
 all: riscv-tests spike zinc
 
 clean: clean-riscv-tests clean-spike clean-zinc
+
+test: all
+	python3 test/run.py
