@@ -71,12 +71,13 @@ class SpikeBackend(Backend):
             m = _LINE_RE.match(line)
             if not m:
                 continue
-            _hart, _priv, pc, insn, rest = m.groups()
+            _hart, priv, pc, insn, rest = m.groups()
             reg_writes, mem_reads, mem_writes = _parse_rest(rest)
             ret.append(
                 Commit(
                     pc=int(pc, 16),
                     insn=int(insn, 16),
+                    priv=int(priv),
                     reg_writes=reg_writes,
                     mem_reads=mem_reads,
                     mem_writes=mem_writes

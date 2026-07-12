@@ -20,12 +20,6 @@ for test in tests:
     golden_commits = golden_backend.run(test)
     zinc_commits = zinc_backend.run(test)
 
-    if len(golden_commits) != len(zinc_commits):
-        raise RuntimeError(
-            f"Commit count mismatch: in test {test}.dump"
-            f"golden={len(golden_commits)}, zinc={len(zinc_commits)}"
-        )
-
     for index, (golden_commit, zinc_commit) in enumerate(
         zip(golden_commits, zinc_commits)
     ):
@@ -35,5 +29,11 @@ for test in tests:
                 f"Golden: {golden_commit}",
                 f"Zinc: {zinc_commit}"
             )
+
+    if len(golden_commits) != len(zinc_commits):
+        raise RuntimeError(
+            f"Commit count mismatch: in test {test}.dump"
+            f"golden={len(golden_commits)}, zinc={len(zinc_commits)}"
+        )
 
     print(f"Finish all the test!")

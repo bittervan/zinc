@@ -28,6 +28,7 @@ class ZincBackend(Backend):
             commit = Commit(
                 pc=int(data["pc"], 0),
                 insn=int(data["insn"], 0),
+                priv=int(data["priv"]),
                 reg_writes=[
                     RegWrite(
                         type=write["type"],

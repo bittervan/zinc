@@ -31,6 +31,7 @@ class MemAccess:
 class Commit:
     pc: int
     insn: int
+    priv: int
     reg_writes: list[RegWrite]
     mem_reads: list[MemAccess]
     mem_writes: list[MemAccess]
