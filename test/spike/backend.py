@@ -34,6 +34,14 @@ def _memory_access_size(insn: int) -> int:
             0b010: 4,  # SW
             0b011: 8,  # SD
         }
+    elif opcode == 0b0000111:
+        sizes = {
+            0b010: 4,
+        }
+    elif opcode == 0b0100111:
+        sizes = {
+            0b010: 4,
+        }
     else:
         raise ValueError(
             f"memory trace for unsupported "
@@ -106,10 +114,15 @@ class SpikeBackend(Backend):
         
     def run(self, elf_path: Path) -> list[Commit]:
         r = subprocess.run(
-            [str(self._bin_path), "--priv=mu", "--triggers=0", f"--pc={_read_elf_entry(elf_path)}", "--log-commits", "--log=/dev/stdout", str(elf_path)],
+            [str(self._bin_path), "--priv=mu", "--triggers=0", "--isa=rv64if_zicsr_zifencei", f"--pc={_read_elf_entry(elf_path)}", "--log-commits", "--log=/dev/stdout", str(elf_path)],
             capture_output=True,
             text=True
         )
+        if r.returncode != 0:
+            raise RuntimeError(
+                f"failed to run Spike for {elf_path}:\n"
+                f"{r.stderr.rstrip()}"
+            )
 
         ret: list[Commit] = []
 
