@@ -114,7 +114,7 @@ class SpikeBackend(Backend):
         
     def run(self, elf_path: Path) -> list[Commit]:
         r = subprocess.run(
-            [str(self._bin_path), "--priv=mu", "--triggers=0", "--isa=rv64if_zicsr_zifencei", f"--pc={_read_elf_entry(elf_path)}", "--log-commits", "--log=/dev/stdout", str(elf_path)],
+            [str(self._bin_path), "--priv=mu", "--triggers=0", "--isa=rv64imf_zicsr_zifencei", f"--pc={_read_elf_entry(elf_path)}", "--log-commits", "--log=/dev/stdout", str(elf_path)],
             capture_output=True,
             text=True
         )

@@ -4,7 +4,7 @@ RISCV_TESTS_ISA_BUILD := $(RISCV_TESTS_BUILD)/isa
 
 RISCV_TARGET ?= riscv64-elf
 RISCV_PREFIX := $(RISCV_TARGET)-
-RISCV_TESTS_TARGETS := rv64ui rv64uf
+RISCV_TESTS_TARGETS := rv64ui rv64uf rv64um
 # RISCV_TESTS_TARGETS := rv64ui
 
 .PHONY: riscv-tests
@@ -16,6 +16,7 @@ riscv-tests: $(RISCV_TESTS_BUILD)/Makefile $(RISCV_TESTS_ISA_BUILD)
 		RISCV_PREFIX=$(RISCV_PREFIX) \
 		rv64ui_v_tests= \
 		rv64uf_v_tests= \
+		rv64um_v_tests= \
 		$(RISCV_TESTS_TARGETS)
 
 $(RISCV_TESTS_BUILD)/Makefile: $(RISCV_TESTS_SRC)/configure
