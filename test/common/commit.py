@@ -13,6 +13,18 @@ class RegWrite:
             f"value=0x{self.value:016x})"
         )
 
+
+def normalize_reg_writes(writes):
+    return sorted(
+        writes,
+        key=lambda write: (
+            write.type,
+            write.num,
+            write.value,
+        ),
+    )
+
+
 @dataclass
 class MemAccess:
     addr: int
@@ -35,6 +47,20 @@ class Commit:
     reg_writes: list[RegWrite]
     mem_reads: list[MemAccess]
     mem_writes: list[MemAccess]
+
+    def __eq__(self, other):
+        if not isinstance(other, Commit):
+            return NotImplemented
+
+        return (
+            self.pc == other.pc
+            and self.insn == other.insn
+            and self.priv == other.priv
+            and normalize_reg_writes(self.reg_writes)
+                == normalize_reg_writes(other.reg_writes)
+            and self.mem_reads == other.mem_reads
+            and self.mem_writes == other.mem_writes
+        )
 
     def __repr__(self):
         return (
