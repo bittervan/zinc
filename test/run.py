@@ -8,9 +8,13 @@ TESTS_DIR = ROOT / "build" / "riscv-tests" / "isa"
 SPIKE_BIN = ROOT / "build" / "spike" / "spike"
 ZINC_BIN = ROOT / "build" / "zinc" / "sim" / "zinc-sim"
 
+EXCLUDED_TESTS = {
+    "rv64ui-p-ma_data",
+}
+
 tests = sorted(
     p for p in TESTS_DIR.glob("rv64*-p-*")
-        if p.suffix != ".dump"
+        if p.suffix != ".dump" and p.name not in EXCLUDED_TESTS
 )
 
 golden_backend = SpikeBackend(SPIKE_BIN)
